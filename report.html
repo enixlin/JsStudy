@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="./commanUtil.js"></script>
+
+</head>
+
+<body>
+    <div id='div'>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <input type="button" name="inp" value="click" id='input'>
+    </div>
+</body>
+
+</html>
+<style>
+    div {
+        width: 500;
+        height: 500;
+        background: #abcabc
+    }
+</style>
+
+<script>
+    var addHander = function(element, type, fn) {
+        if (element.addEventListener) {
+            element.addEventListener(type, fn, false);
+        }
+        if (element.attachEvent) {
+            alert('ie browser');
+        }
+    }
+
+
+    var inp = document.getElementById('input');
+    var div = document.getElementById('div');
+    addHander(inp, 'click', function() {
+        alert('button click');
+    });
+    addHander(div, 'mousemove', function() {
+        alert('div mousemove');
+    });
+</script>

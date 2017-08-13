@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="./commanUtil.js">
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
+
+<script>
+    var Department = function(name, code) {
+        this.name = name;
+        this.code = code;
+        this.say1 = function() {
+            alert('dep say');
+        }
+    }
+    Department.prototype.say = function() {
+        alert('department name is:' + this.name);
+    }
+
+    var Headoffice = function(name, code) {
+        Headoffice.SuperClass.constructor.call(this, name, code);
+    };
+    // Headoffice.prototype = new Department();
+    function extend(superClass, subClass) {
+        var F = new Function();
+        F.prototype = superClass.prototype;
+        subClass.prototype = new F();
+        // 重写子类的构造函数
+        subClass.prototype.constructor = subClass;
+        // 保存父类的原型到子类的一个引用属性中
+        subClass.SuperClass = superClass.prototype;
+    }
+    extend(Department, Headoffice);
+
+    Headoffice.prototype.say = function() {
+        alert('headoffice name is:' + this.name);
+    }
+    var h = new Headoffice("head", '010');
+    console.log(h);
+    //h.SuperClass.say.call(h);
+    h.say1();
+    //    、、 h.SuperClass.say1();
+</script>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+</body>
+
+</html>
+
+<script charset="utf-8">
+    /* 链式方法调用 */
+    /* 链式方法调 用的关键就是每一个方法都返回对象自身（return this;） */
+    var obj = {
+        methodA: function() {
+            alert('methodA is running...');
+            return this;
+        },
+        methodB: function() {
+            alert('methodB is running...');
+        }
+    };
+
+    obj.methodA().methodB();
+</script>

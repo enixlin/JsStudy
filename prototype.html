@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+        /* 简单原型 */
+        function Person() {}
+        var p1 = new Person();
+        // Person.prototype.say = function() {
+        //     alert('prototype say method');
+        // }
+
+        /* 简单原型必需在所有字面量设置完成后才能调用,才能生成新的实例对象 */
+        Person.prototype = {
+            constructor: Person,
+            name: 'linzhenhuan',
+            age: 36,
+            say: function() {
+                alert('prototype say method');
+            }
+        }
+
+        /* ECMA5 的defineProperty方法，用于重新定义构造函数，使构造函数不能被枚举 */
+        Object.defineProperty(Person.prototype, 'constructor', {
+            enumerable: false,
+            value: Person
+        });
+
+        /* 生成对象实例p2 */
+        var p2 = new Person();
+
+        /* 历遍实例象的所有可枚举属性 */
+        for (var e in p2) {
+            alert(e);
+        }
+
+        // p2.say();
+    </script>
+
+</head>
+
+<body>
+
+</body>
+
+</html>

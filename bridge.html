@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <input type="button" name="inp" value="click" id='inp'>
+    <input type="text" name="text" id='box'>
+</body>
+
+</html>
+
+<script>
+    /* 桥模式 */
+    /* 其实 模式就是要让两段代码独立起来，让两段代码可以单独进行单元测试*/
+    // 三种桥模式
+
+    /* 1.前后桥接模式 */
+    // 前台操作方法
+    /* 
+     var fontMethod = function() {
+        var inp = document.getElementById('inp');
+        var value = document.getElementById('box').value;
+        inp.addEventListener('click', bridge, false);
+    }
+    fontMethod();
+    // 桥接函数
+    var bridge = function(msg) {
+            return serverMethod(msg);
+        }
+        //  请求后台操作方法（服务器操作）
+    var serverMethod = function(msg) {
+        alert('返回服务器数据' + msg);
+    }
+    */
+
+    /* 2.特权函数桥模式(内外桥接) */
+    /*     
+    var Person = function() {
+            // 私用方法，实例对象不能访问
+            var privateMethod = function() {
+                alert('一些秘密不能对外说。。。');
+            };
+            // 内外桥接函数（方法）
+            this.bridge = function() {
+                return privateMethod();
+            }
+        }
+        var p = new Person();
+       //p.privateMethod();    // 私用方法，实例对象不能访问
+         p.bridge();            //通过桥接后才能访问 
+         
+    */
+
+
+    /* 3.多个类桥接模式 */
+    /*   
+    var Class1 = function(arg) {
+          this.por = arg;
+      };
+      var Class2 = function(arg) {
+          this.por = arg;
+      };
+      var Class3 = function(arg) {
+          this.por = arg;
+      };
+
+      var bridge = function(a, b, c) {
+          var c1 = new Class1(a);
+          var c2 = new Class1(a);
+          var c3 = new Class1(a);
+          return {
+              class1: c1,
+              class2: c2,
+              class3: c3
+          };
+      } 
+    */
+</script>

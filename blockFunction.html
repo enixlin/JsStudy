@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+</body>
+
+</html>
+
+
+<script>
+    /* 块级作用域的特点： */
+    /* 块级作用域：(function(){})(); */
+    // 1.块级里的代码立刻执行，无需调用
+    // 2.块级外的代码不能调用里面的变量和方法，除了不带var声明的变量和方法
+    // var a = 10;
+    (function() {
+        // 约定规范：所有的内部私有变量都用下划线'_'开头
+        _private_variant = 10;
+        alert('执行了,a=' + _private_variant);
+    })();
+    alert(_private_variant);
+</script>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src='./commanUtil.js'></script>
+</head>
+
+<body>
+
+</body>
+
+</html>
+
+
+<script>
+    /* 类工厂 */
+    /*     function createObjct(name, age, gender) {
+            var obj = new Object();
+            obj.name = name;
+            obj.age = age;
+            obj.gender = gender;
+            obj.say = function() {
+                alert('我的名字是：' + obj.name)
+            };
+            return obj;
+        }
+
+        var z3 = createObjct('linzhenhuan', 34, '男');
+        z3.say(); */
+
+
+
+    /* 构造函数法 */
+    /* function Person(name, age, gender) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.say = function() {
+            alert('my name is ' + this.name)
+        }
+    }
+    var linzhenhuan = new Person('linzhenhuan', 35, '男');
+    linzhenhuan.say(); 
+    var p = new Object();
+    alert(p instanceof Object);
+    */
+
+    /*  简单工厂模式 */
+    var CarInterface = new LZH.Interface('Car', ['start', 'run', 'stop']);
+    var Benz = function() {};
+    Benz.prototype.start = function() {
+        alert('Benz is start');
+    };
+    Benz.prototype.run = function() {
+        alert('Benz is run');
+    };
+    Benz.prototype.stop = function() {
+        alert('Benz is stop');
+    };
+
+    console.log(LZH.Interface.ensureImplements(Benz, CarInterface));
+</script>

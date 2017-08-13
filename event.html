@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div id="div" style="width:100%;background:#123123;height:500px">
+        <input type="button" name="btn2" value="btn2" id="btn2">
+        <input type="button" name="btn3" value="btn3" id="btn3">
+        <input type="button" name="btn1" value="btn1" id="btn1">
+    </div>
+</body>
+
+</html>
+<script>
+    var getEvent = function(event) {
+        return event || window.event;
+    }
+    var getTarget = function(event) {
+        var event = getEvent(event);
+        return event.getTarget || event.srcElement;
+    }
+
+    var preventDefault = function(event) {
+        var event = getEvent(event);
+        if (event.preventDefault) {
+            event.preventDefault();
+        } else {
+            event.cancleBubble = true;
+            event.returnValue = false;
+        }
+    }
+
+    // var btn = document.getElementsByTagName("input");
+    // console.log(btn);
+    // btn[0].onclick = function(event) {
+
+    //     alert('clicked');
+
+    //     event.stopPropagation();
+
+    // }
+    var btn = document.getElementById("btn1");
+    var div = document.getElementById("div");
+
+    btn.onclick = function(e) {
+        preventDefault(e);
+        alert('click btn');
+        e.cancleBubble = true;
+    }
+
+    div.onclick = function(e) {
+        preventDefault(e);
+        alert('click div');
+
+    }
+
+
+    // document.onclick = function(e) {
+    //     // e.stopPropagation();
+    //     // preventDefault(e);
+    //     alert(getTarget(e).name);
+    // }
+</script>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+</body>
+
+</html>
+
+
+<script>
+    /* 继承的五种方法 */
+
+
+    /* 1.类继承 */
+    // 定义父类
+    /*    
+     function SuperClass() {
+            this.name = 'SuperClass';
+            this.age = 23;
+            this.arr = ['a']; //引用类型
+            this.say = function() {
+                alert('SuperClass say:....');
+            }
+        };
+        // 定义子类
+        function SubClass() {};
+        SubClass.prototype = new SuperClass();
+        var instance1 = new SubClass();
+        var instance2 = new SubClass();
+        alert('instance1.arr=' + instance1.arr);
+        alert('instance1.age=' + instance1.age);
+        // 改变了其中一个实例中的引用类型属性，所有对象的该属性都会改变
+        instance1.arr.push('b');
+        alert('instance2.arr=' + instance2.arr);
+        // 改变了其中一个实例中的数值类型属性，所有对象的该属性都不会改变
+        instance1.age = 80;
+        alert('instance2.age=' + instance2.age); 
+        */
+
+    /* 2.构造函数继承 */
+    // 定义父类 
+    /* 
+    function SuperClass() {
+        this.name = 'SuperClass';
+        this.age = 23;
+        this.arr = ['a']; //引用类型
+        this.say = function() {
+            alert('SuperClass say:....');
+        }
+    };
+    // 定义子类
+    function SubClass() {
+        //继承父类
+        SuperClass.call(this);
+    };
+
+    // 创建子类实例
+    var instance1 = new SubClass();
+    var instance2 = new SubClass();
+    alert('instance1.arr=' + instance1.arr);
+    alert('instance1.age=' + instance1.age);
+    // 改变了其中一个实例中的引用类型属性，所有对象的该属性都不会改变
+    instance1.arr.push('b');
+    alert('instance2.arr=' + instance2.arr);
+    // 改变了其中一个实例中的数值类型属性，所有对象的该属性都不会改变
+    instance1.age = 80;
+    alert('instance2.age=' + instance2.age);
+     */
+
+    /* 3.组合继承 */
+    /* 
+    function SuperClass() {
+        this.name = 'SuperClass';
+        this.age = 23;
+        this.arr = ['a']; //引用类型
+        this.say = function() {
+            alert('SuperClass say:....');
+        }
+    };
+    // 定义子类
+    function SubClass() {
+        //继承父类
+        SuperClass.call(this);
+    };
+    SubClass.prototype = new SuperClass();
+    // 创建子类实例
+    var instance1 = new SubClass();
+    var instance2 = new SubClass();
+    alert('instance1.arr=' + instance1.arr);
+    alert('instance1.age=' + instance1.age);
+    // 改变了其中一个实例中的引用类型属性，所有对象的该属性都不会改变
+    instance1.arr.push('b');
+    alert('instance2.arr=' + instance2.arr);
+    // 改变了其中一个实例中的数值类型属性，所有对象的该属性都不会改变
+    instance1.age = 80;
+    alert('instance2.age=' + instance2.age);
+     */
+
+    /* 4.原型式继承 */
+    /*  function extend(sup, sub) {
+         var F = new Function();
+         F.prototype = sup.prototype;
+         sub.prototype = new F();
+         // 还原子类的构造器
+         sub.prototype.constructor = sub;
+         // 保存一下父类的原型对象
+         sub.SuperClass = sup.prototype;
+     };
+
+     function SuperClass() {
+         this.name = 'SuperClass';
+         this.age = 23;
+         this.arr = ['a']; //引用类型
+         this.say = function() {
+             alert('SuperClass say:....');
+         }
+     };
+     // 定义子类
+     function SubClass() {
+         //继承父类模板
+         SubClass.SuperClass.constructor.call(this);
+     };
+     extend(SuperClass, SubClass);
+
+     // 创建子类实例
+     var instance1 = new SubClass();
+     var instance2 = new SubClass();
+     alert('instance1.arr=' + instance1.arr);
+     alert('instance1.age=' + instance1.age);
+     // 改变了其中一个实例中的引用类型属性，所有对象的该属性都不会改变
+     instance1.arr.push('b');
+     alert('instance2.arr=' + instance2.arr);
+     // 改变了其中一个实例中的数值类型属性，所有对象的该属性都不会改变
+     instance1.age = 80;
+     alert('instance2.age=' + instance2.age); */
+
+
+    /* 5.多继承 */
+    var mix = function() {
+        var i = 1,
+            len = arguments.length,
+            target = arguments[0],
+            arg;
+        for (; i < len; i++) {
+            arg = arguments[i];
+            //遍历被继承对象中的属性
+            for (var property in arg) {
+                // 将被继承对象中的属性复制到目标对象中
+                target[property] = arg[property];
+            }
+        }
+        return target;
+    }
+</script>

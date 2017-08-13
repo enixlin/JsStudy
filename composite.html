@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="./commanUtil.js"></script>
+</head>
+
+<body>
+
+</body>
+
+</html>
+
+
+<script>
+    /* 组合模式 */
+    /*     
+    树状数据结构：
+        总行
+          ├┈┈┈┈部室
+          |    ┝┈┈国际部
+          |    ┕┈┈公司部
+          ├┈┈┈┈支行
+               |---环市支行
+               |---江南支行 
+    */
+
+
+
+    var CompositeInterface = new LZH.Interface('Composite', ['addChild', 'getChild']);
+    var LeafInterface = new LZH.Interface('Leaf', ['hardWork', 'sleep']);
+
+    var Leaf = function(name) {
+        this.name = name;
+        this.type = 'Leaf';
+    }
+    Leaf.prototype = {
+        constructor: Leaf,
+        addChild: function(child) {
+            throw new Error('can not add child');
+        },
+        getChild: function(name) {
+            if (this.name == name) {
+                return this;
+            }
+            return null;
+        },
+        hardWork: function(name) {
+            document.write(name + 'hardworking.........');
+        },
+        // sleep: function(name) {
+        //     document.write(name + 'sleeping.........');
+        // }
+    }
+
+    var Composite = function(name) {
+        this.name = name;
+        this.type = 'Composite';
+        this.children = [];
+    }
+    Composite.prototype = {
+        constructor: Composite,
+        addChild: function(child) {
+            this.children.push(child);
+            return this;
+        },
+        getChild: function(name) {
+            // 接收叶子类型 的对象，放到elements数组
+            var elements = [];
+            // 判断对象是否为leaf类型，如果是直接加到elements数组当中
+            var pushLeaf = function(item) {
+                    if (item.type === 'Composite') {
+                        //   item.children.each(arguments.callee);
+                        LZH.arrayEach(item.children, function(e) {
+                            document.write(e.name);
+                        });
+                    } else if (item.type === 'Leaf') {
+                        elements.push(item);
+                    }
+                }
+                // 指定名字下的所有Leaf类型 的对象
+            if (name || this.name == name) {
+
+            } else {
+                LZH.arrayEach(this.children, pushLeaf);
+                //this.children.each(pushLeaf);
+            }
+            return elements;
+        },
+        hardWork: function(name) {
+            // 得到所有的leaf类型的对象数组
+            var leafObject = this.getChild(name);
+            for (var i = 0; i < leafObject.length; i++) {
+                leafObject[i].hardWork(leafObject[i].name);
+            }
+        },
+        sleep: function(name) {
+            // 得到所有的leaf类型的对象
+            var leafObject = this.getChild(name);
+            for (var i = 0; i < leafObject.length; i++) {
+                leafObject[i].sleep(leafObject[i].name);
+            }
+        }
+    }
+
+
+    /* 测试数据 */
+    var leaf1 = new Leaf('lin1');
+    var leaf2 = new Leaf('lin2');
+    var leaf3 = new Leaf('lin3');
+    var leaf4 = new Leaf('lin4');
+    var leaf5 = new Leaf('lin5');
+
+    var com1 = new Composite('国际部');
+    var com2 = new Composite('公司部');
+
+    LZH.Interface.ensureImplements(leaf1, LeafInterface);
+
+    com1.addChild(leaf1).addChild(leaf2).addChild(leaf3);
+    com2.addChild(leaf4).addChild(leaf5);
+
+    var company = new Composite('融和农商行');
+    company.addChild(com1).addChild(com2);
+    // console.log(company);
+    // company.each();
+    company.hardWork();
+</script>

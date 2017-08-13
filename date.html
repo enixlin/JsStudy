@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+</body>
+
+</html>
+
+<script charset="utf-8">
+    function getToday(dateFormat) {
+        /* 返回的日期格式 */
+        // 1.为'yyyyy-mm-dd'
+        // 2.为'yyyyy/mm/dd'
+        // 3.为'yyyyymmdd'
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getUTCMonth();
+        var day = date.getDay();
+        if (dateFormat == 1) {
+            return year + '-' + month + '-' + month
+        }
+        if (dateFormat == 2) {
+            return year + '/' + month + '/' + month
+        }
+        if (dateFormat == 3) {
+            return year + '' + month + '' + month
+        }
+    }
+
+    alert(getToday(1));
+    alert(getToday(2));
+    alert(getToday(3));
+</script>

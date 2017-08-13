@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
+
+<script>
+    /*
+     * @Author: LINZHENHUAN 
+     * @Date: 2017-07-30 20:31:56 
+     * @Last Modified by: LINZHENHUAN
+     * @Last Modified time: 2017-08-03 12:59:48
+     */
+
+    /* 一、创建单体的三种方法 */
+
+    /* 1 单体模式 */
+    /* var Singleton = {
+        name: "singleton",
+        say: function() {
+            alert("hello world");
+        },
+        eat: function() {
+            alert("eat something");
+        }
+    };
+    Singleton.say();
+    Singleton.eat();
+     */
+
+    /* 2 划分命名空间 */
+    // 区分自已和别人写代码
+    /* var HBX = {};
+    HBX.Singleton = {
+        name: "singleton",
+        say: function() {
+            alert("hello world");
+        },
+        eat: function() {
+            alert("eat something");
+        }
+    };
+    HBX.Singleton.say();
+    HBX.Singleton.eat(); */
+
+    /* 3 借用闭包创建单体 */
+    /* var HBX = {};
+    HBX.Singleton = (function() {
+        //添加私有成员在这里，通过下面的return返回
+        var name = "lin";
+        var age = 34;
+        //所有外部访问只能通过下面的return提供的属性和方法进行
+        return {
+
+            say: function() {
+                alert(name + " say :hello world");
+                alert('my age is ' + age);
+            },
+            eat: function() {
+                alert("eat something");
+            }
+        };
+    })();
+
+    HBX.Singleton.say();
+    alert(HBX.Singleton.age); */
+
+    /* 二、惰性单体和分体单体 */
+    /* 1.惰性单体 */
+    /* var Ext = {}; /*命名空间  */
+    /*
+    Ext.Base = (function() {
+        var me = this;
+        //实例创建标记
+        var protery;
+        var method;
+        // 私有成员
+        var name = "linzhenhuan";
+        var age = 36;
+        // 私有方法
+        var say = function() {
+            alert(name + " say :hello world");
+            alert("my age is " + age);
+            return "fds";
+        };
+        var eat = function() {
+            alert(name + " eat something ");
+        };
+
+        function getProtery() {
+            return {
+                name: name,
+                age: age
+            };
+        }
+
+        function getMethod() {
+            return {
+                say: function() {
+                    return say();
+                },
+                eat: function() {
+                    eat();
+                }
+            };
+        }
+
+        // *****************************************************
+        // 和用闭包创建单体不同的是，惰性单体并不一次过返回所有的方法
+        // 注意：单体函数体Ext.Base = (function() {})();
+        //       运行时只返回了两个函数的字面量
+        //       （即getProtery 和 getMethod 的 定义）,
+        //       调用 getProtery() 和 getMethod() 真正返回单体
+        // *****************************************************
+        return {
+            getProtery: function() {
+                if (!protery) {
+                    protery = getProtery();
+                }
+                return protery;
+            },
+            getMethod: function() {
+                if (!method) {
+                    method = getMethod();
+                }
+                return method;
+            }
+        };
+    })();
+    alert("show instance name:" + Ext.Base.getProtery().name);
+    //console.log(Ext.Base.getProtery());
+    var instance = Ext.Base.getMethod().say();
+    console.log(instance); 
+    */
+    //console.log(Ext.Base);
+
+    //instance.say();
+
+    /* 2 分支单体 */
+    /*典型应用：判断用户浏览器 */
+    // var Ext = {};
+    // var def = true;
+    // Ext.more =(function() {
+    //   var objA = {
+    //     //分支一
+    //   };
+    //   var objB = {
+    //     //分支二
+    //   };
+    //   /* 根据不同的条件返回不同的分支 */
+    //   return def ? objA : objB;
+    // })();
+</script>
