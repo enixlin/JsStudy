@@ -12,89 +12,110 @@
     <!-- 加载EXTjs中文配置文件 -->
     <script type="text/javascript" src="./Extjs/locale/locale-zh_CN-debug.js"></script>
     <script>
-        // window.onload = function() {
+        window.onload = function() {
 
-        /* 观察者模型 */
-        // 用观察者模式去定义自定义事件
+            /* 观察者模型 */
+            // 用观察者模式去定义自定义事件
 
-        // 第一步，实现一个类似浏览器的对象，Observable类内置一些可以处理的内置事件
-        var Observable = function() {
-            // Observable类内置一些可以处理的内置事件
-            this.events = ['add', 'run'];
-            // 每个内置事件可以绑定一个或多个函数
-            // 这个过程需要用到一种数据类型，这种类型维护事件和绑定函数的关系
-            this.listeners = {
-                "add": [function() {
-                    alert('add event is call');
-                }],
-                "run": [function() {
-                    alert('run event is call');
-                }]
-            };
-        }
+            // 第一步，实现一个类似浏览器的对象，Observable类内置一些可以处理的内置事件
+            var Observable = function() {
+                // Observable类内置一些可以处理的内置事件
+                this.events = ['add', 'run'];
+                // 每个内置事件可以绑定一个或多个函数
+                // 这个过程需要用到一种数据类型，这种类型维护事件和绑定函数的关系
+                this.listeners = {
+                    // "add": [function() {
+                    //     alert('add event is call');
+                    // }],
+                    // "run": [function() {
+                    //     alert('run event is call');
+                    // }]
+                };
+            }
 
-        // 第二步，添加自定义事件的方法
-        Observable.prototype.addEvents = function(eventName) {
-            this.events.push(eventName);
-        }
-        Observable.prototype.removeEvents = function(eventName) {
-            this.events.pop(eventName);
-        }
+            // 第二步，添加自定义事件的方法
+            Observable.prototype.addEvents = function(eventName) {
+                this.events.push(eventName);
+            }
+            Observable.prototype.removeEvents = function(eventName) {
+                this.events.pop(eventName);
+            }
 
-        // 第三步，为自己的事件类型绑定处理函数
-        Observable.prototype.addListenser = function(eventName, fn) {
-                // 检测事件名是否存在于自定义的事件数组中，不存在就添加
-                if (this.events.indexOf(eventName) == -1) {
-                    this.events.push(eventName);
+            // 第三步，为自己的事件类型绑定处理函数
+            Observable.prototype.addListenser = function(eventName, fn) {
+                    // 检测事件名是否存在于自定义的事件数组中，不存在就添加
+                    if (this.events.indexOf(eventName) == -1) {
+                        this.events.push(eventName);
+                    }
+                    // this.listeners[eventName] = fn;
+                    var arr = this.listeners[eventName];
+                    // 判断当事绑定的事件处理函数是否存在
+                    if (!arr) {
+                        arr = [fn]; //不存在任何的处理函数的话绑定处理函数到事件中
+                    } else {
+                        if (arr.indexOf(fn) == -1) {
+                            arr.push(fn);
+                        }
+                    }
+                    // 更新listeners对应的事件名中的处理函数数组
+                    this.listeners[eventName] = arr;
                 }
-                // this.listeners[eventName] = fn;
+                // 移除事件类型的处理函数
+            Observable.prototype.removeListenser = function(eventName, fn) {
+                if (this.events.indexOf(eventName) == -1) {
+                    return;
+                }
                 var arr = this.listeners[eventName];
                 // 判断当事绑定的事件处理函数是否存在
                 if (!arr) {
-                    arr = [fn]; //不存在任何的处理函数的话绑定处理函数到事件中
+                    return; //（"eventName:[fn1,fn2...]"）不存在任何的处理函数的话,直接返回
                 } else {
                     if (arr.indexOf(fn) == -1) {
-                        arr.push(fn);
+                        arr.splice(indexOf(fn), 1); //移除处理函数
                     }
                 }
                 // 更新listeners对应的事件名中的处理函数数组
                 this.listeners[eventName] = arr;
             }
-            // 移除事件类型的处理函数
-        Observable.prototype.removeListenser = function(eventName, fn) {
-            if (this.events.indexOf(eventName) == -1) {
-                return;
-            }
-            var arr = this.listeners[eventName];
-            // 判断当事绑定的事件处理函数是否存在
-            if (!arr) {
-                return; //（"eventName:[fn1,fn2...]"）不存在任何的处理函数的话,直接返回
-            } else {
-                if (arr.indexOf(fn) == -1) {
-                    arr.splice(indexOf(fn), 1); //移除处理函数
+
+
+            // 如何让事件触发？就是调用这个事件类型所有绑定的函数，让这些函数执行
+            Observable.prototype.eventFire = function(eventName) {
+                // 如果当前没有传递事件类型或事件类型不存在，返回
+                if (!eventName || this.events.indexOf(eventName) == -1) {
+                    return;
+                }
+                // 将当前传递的事件类型绑定的所有处理函数取出
+                var arr = this.listeners[eventName];
+                if (!arr) {
+                    return;
+                }
+                // 将当前传递的事件类型绑定的所有处理函数执行一遍
+                for (var i = 0, len = arr.length; i < len; i++) {
+                    var fn = arr[i];
+                    fn.call(fn, this);
                 }
             }
-            // 更新listeners对应的事件名中的处理函数数组
-            this.listeners[eventName] = arr;
-        }
 
+            var ob = new Observable();
+            fn1 = function() {
+                alert('fn1 is run...');
+            };
+            fn2 = function() {
+                alert('fn2 is run...');
+            };
+            fn3 = function() {
+                alert('create is run...');
+            };
 
-        // 如何让事件触发？就是调用这个事件类型所有绑定的函数，让这些函数执行
-        Observable.prototype.eventFire = function(eventName) {
-            // 如果当前没有传递事件类型或事件类型不存在，返回
-            if (!eventName || this.events.indexOf(eventName) == -1) {
-                return;
-            }
-            // 将当前传递的事件类型绑定的所有处理函数取出
-            var arr = this.listeners[eventName];
-            if (!arr) {
-                return;
-            }
-            // 将当前传递的事件类型绑定的所有处理函数执行一遍
-            for (var i = 0, len = arr.length; i < len; i++) {
-                var fn = arr[i];
-                fn.call(fn, this);
-            }
+            ob.addListenser('run', fn1);
+            ob.addListenser('add', fn2);
+            ob.addListenser('create', fn3);
+
+            ob.eventFire('run');
+            ob.eventFire('add');
+            ob.eventFire('create');
+
         }
     </script>
 
